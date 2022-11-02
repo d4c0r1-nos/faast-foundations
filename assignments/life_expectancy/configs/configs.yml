@@ -1,0 +1,42 @@
+# -----------------------------------------
+#             Raw Data
+# -----------------------------------------
+# the data path
+load_data_path: "life_expectancy/data/eu_life_expectancy_raw.tsv"
+
+# columns to be renamed
+rename_raw_columns:
+  "geo\\time": "region"
+
+# column for location
+col_location: "region"
+
+# -----------------------------------------
+#             Unpivoting
+# -----------------------------------------
+# col id_vars
+col_id_vars:
+  - 'unit'
+  - 'sex'
+  - 'age'
+  - 'region'
+
+# other columns to rename
+rename_columns:
+  variable: year
+  value: value
+
+# ensure col_types original names
+ensure_col_types:
+  variable: int
+  value: float
+
+representations_of_nan:
+  - ":"
+  - ''
+  - ": "
+
+# -----------------------------------------
+#             Save
+# -----------------------------------------
+save_data_path: "life_expectancy/data/pt_life_expectancy_raw.csv"
