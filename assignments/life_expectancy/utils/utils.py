@@ -1,9 +1,9 @@
 """
 General utils
 """
+import re
 import yaml
 import pandas as pd
-import re
 
 
 def f_config_parser(file_path: str) -> dict:
@@ -16,7 +16,10 @@ def f_config_parser(file_path: str) -> dict:
 
     """
 
-    return yaml.load(open(file_path), Loader=yaml.Loader)
+    return yaml.load(
+        open(file_path, encoding="utf8"),
+        Loader=yaml.Loader
+    )
 
 
 def f_input_configs(file_path: str) -> (str, ):
@@ -71,10 +74,13 @@ def import_csv_to_pd(path_csv: str, sep: str = ',') -> pd.DataFrame:
     :return: pd.Dataframe
         data
     """
-    return pd.read_csv(path_csv, sep=sep)
+    return pd.read_csv(path_csv, sep=sep, engine='python')
 
 
-def save_pd_to_csv(df: pd.DataFrame, path_csv: str) -> None:
+def save_pd_to_csv(
+        df: pd.DataFrame,   # pylint: disable=invalid-name
+        path_csv: str
+) -> None:
     """
     Save dataframe to .csv.
 
