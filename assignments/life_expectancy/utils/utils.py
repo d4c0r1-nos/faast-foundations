@@ -49,8 +49,6 @@ def f_input_configs(file_path: str) -> (str, ):
                 values to convert to NaN, as they represent NaN
             location_col: str
                 "final" name (if renamed) of the region column, from input data
-            location_filter: str
-                region to be filtered
     """
     configs = f_config_parser(file_path)
 
