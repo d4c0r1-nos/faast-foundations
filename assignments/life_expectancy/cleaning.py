@@ -1,17 +1,17 @@
 """
 Functions to cleaning data
 """
-import pandas as pd
-import numpy as np
 from typing import List
 import time
+import logging as log
+import pandas as pd
+import numpy as np
 from life_expectancy.utils import f_input_configs, import_csv_to_pd, \
     save_pd_to_csv, f_remove_non_digits
-import logging as log
 log.getLogger().setLevel(log.INFO)
 
 
-def clean_data() -> None:
+def clean_data(location_filter: str = 'PT') -> None:
     """
     Main Script to clean the data.
 
@@ -30,8 +30,7 @@ def clean_data() -> None:
     # for inputs description, check f_input_configs docstring
     load_data_path, save_data_path, rename_raw_cols, \
         unpivot_col_id_vars, rename_unpivot_cols, types_unpivot_cols, \
-        representations_of_nan, location_col, \
-        location_filter = f_input_configs(configs_path)
+        representations_of_nan, location_col = f_input_configs(configs_path)
 
     log.info("Starting...")
 
@@ -47,9 +46,7 @@ def clean_data() -> None:
     df_input = df_input.rename(
         columns=rename_raw_cols
     ).query(    # filter location to processing only required data
-        '{} == "{}"'.format(
-            location_col, location_filter
-        )
+        f'{location_col} == "{location_filter}"'
     )
 
     log.info("Unpivot Data")
@@ -71,11 +68,11 @@ def clean_data() -> None:
     save_pd_to_csv(df_, save_data_path)
 
     log.info("~~~~~~~~~ Finished ~~~~~~~~~")
-    log.info('Execution time: {}s'.format(round(time.time() - t_start, 3)))
+    log.info('Execution time: %s', round(time.time() - t_start, 3))
 
 
 def unpivot_for_digit_cols(
-        df: pd.DataFrame,
+        df: pd.DataFrame,  # pylint: disable=invalid-name
         col_id_vars: List[str]
 ) -> pd.DataFrame:
     """
@@ -97,5 +94,12 @@ def unpivot_for_digit_cols(
     return df[col_id_vars + ['variable', 'value']]
 
 
-if __name__ == '__main__':
-    clean_data()
+if __name__ == '__main__':  # pragma: no cover
+    import argparse
+    parser = argparse.ArgumentParser(description='Running Assignement 1')
+    parser.add_argument('-c', '--country', type=str,
+                        help='country for filtering', required=False)
+
+
+    args = parser.parse_args()
+    clean_data(args.country)

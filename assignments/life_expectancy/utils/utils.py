@@ -54,8 +54,7 @@ def f_input_configs(file_path: str) -> (str, ):
     return configs['load_data_path'], configs['save_data_path'], \
         configs.get('rename_raw_columns', {}), configs['col_id_vars'], \
         configs.get('rename_columns', {}), configs.get('ensure_col_types', {}), \
-        configs['representations_of_nan'], configs.get('col_location', 'region'), \
-        configs.get('location_filter', 'PT')
+        configs['representations_of_nan'], configs.get('col_location', 'region')
 
 
 def import_csv_to_pd(path_csv: str, sep: str = ',') -> pd.DataFrame:
