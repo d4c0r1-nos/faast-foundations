@@ -39,4 +39,4 @@ representations_of_nan:
 # -----------------------------------------
 #             Save
 # -----------------------------------------
-save_data_path: "life_expectancy/data/pt_life_expectancy_raw.csv"
+save_data_path: "life_expectancy/data/pt_life_expectancy.csv"

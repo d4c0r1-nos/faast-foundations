@@ -12,15 +12,6 @@ log.getLogger().setLevel(log.INFO)
 
 
 def clean_data() -> None:
-    # load_data_path: str,
-    # save_data_path: str,
-    # rename_raw_cols: Dict[str, str],
-    # unpivot_col_id_vars: List[str],
-    # rename_unpivot_cols: Dict[str, str],
-    # types_unpivot_cols: Dict[str, type],
-    # representations_of_nan: List[str],
-    # location_col: str,
-    # location_filter: str
     """
     Main Script to clean the data.
 
@@ -47,11 +38,10 @@ def clean_data() -> None:
     log.info("~~~~~~~~~ Extract Data ~~~~~~~~~")
 
     df_input = import_csv_to_pd(
-        load_data_path, sep=',|\t'
+        load_data_path, sep=',| \t|\t'
     )
 
     log.info("~~~~~~~~~ Transform Data ~~~~~~~~~")
-
     log.info("Transforming Input Data")
 
     df_input = df_input.rename(
@@ -70,10 +60,13 @@ def clean_data() -> None:
         representations_of_nan, np.nan
     ).dropna().astype(  # types of variable and value cols
         types_unpivot_cols
-    ).rename(  # rename variable and value columns
+    )
+    # it should
+    df_["value"] = df_["value"]/10
+
+    df_ = df_.rename(  # rename variable and value columns
         columns=rename_unpivot_cols
     )
-
     log.info("~~~~~~~~~ Load Data ~~~~~~~~~")
     save_pd_to_csv(df_, save_data_path)
 
@@ -105,18 +98,4 @@ def unpivot_for_digit_cols(
 
 
 if __name__ == '__main__':
-
-    # hardcoded path | to be replaced
-    # configs_path = 'configs/configs.yml'
-    # configs_path = 'life_expectancy/configs/configs.yml'
-
-    # configs = f_config_parser(configs_path)
-
     clean_data()
-    #     configs['load_data_path'], configs['save_data_path'],
-    #     # if no dictionary is provided to rename,
-    #     # it assumes no renaming => {}
-    #     configs.get('rename_raw_columns', {}), configs['col_id_vars'], configs.get('rename_columns', {}),
-    #     configs.get('ensure_col_types', {}), configs['representations_of_nan'],
-    #     configs.get('col_location', 'region'), configs.get('location_filter', 'PT')
-    #
