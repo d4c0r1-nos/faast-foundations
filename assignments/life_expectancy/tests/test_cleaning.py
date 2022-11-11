@@ -35,6 +35,7 @@ def test_location_filter(get_configs):
 
 
 def test_args_parser():
+    """Test args parsing"""
 
     parser = parse_args(['-c', 'ES'])
 

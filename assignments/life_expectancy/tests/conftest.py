@@ -1,10 +1,9 @@
 """Pytest configuration file"""
 import pandas as pd
 import pytest
-import yaml
 
-from . import FIXTURES_DIR, OUTPUT_DIR, CONFIGS_DIR
 from life_expectancy.utils import f_config_parser
+from . import FIXTURES_DIR, OUTPUT_DIR, CONFIGS_DIR
 
 
 @pytest.fixture(autouse=True)
