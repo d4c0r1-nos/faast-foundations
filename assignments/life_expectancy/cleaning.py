@@ -25,20 +25,20 @@ def clean_data(  # pylint: disable=too-many-arguments
     """
     This function cleans and transforms the data
 
-    :param location_col: str
-        name of the col to filter location
-    :param representations_of_nan: list
-        the possible representations od NaN
-    :param types_unpivot_cols: dict
-        dict w/ types per col {col: type}
-    :param rename_unpivot_cols: dict
-        rename cols {old_name: new_name}
-    :param unpivot_col_id_vars: list
-        list w/ names of the columns used as id for unpivot
-    :param rename_raw_cols: dict
-        id columns that we want to rename {old_name: new_name}
     :param df: pd.Dataframe
         to clean and transform
+    :param rename_raw_cols: dict
+        id columns that we want to rename {old_name: new_name}
+    :param unpivot_col_id_vars: list
+        list w/ names of the columns used as id for unpivot
+    :param rename_unpivot_cols: dict
+        rename cols {old_name: new_name}
+    :param types_unpivot_cols: dict
+        dict w/ types per col {col: type}
+    :param representations_of_nan: list
+        the possible representations od NaN
+    :param location_col: str
+        name of the col to filter location
     :param location_filter: str
         location filter
     :return: pd.Dataframe
@@ -53,7 +53,7 @@ def clean_data(  # pylint: disable=too-many-arguments
 
     log.info("Unpivot Data")
 
-    df_ = unpivot_for_digit_cols(
+    df_cl = unpivot_for_digit_cols(
         df, unpivot_col_id_vars
     ).replace(
         representations_of_nan, np.nan
@@ -61,9 +61,9 @@ def clean_data(  # pylint: disable=too-many-arguments
         types_unpivot_cols
     )
     # it should
-    df_["value"] = df_["value"] / 10
+    df_cl["value"] = df_cl["value"] / 10
 
-    return df_.rename(columns=rename_unpivot_cols)
+    return df_cl.rename(columns=rename_unpivot_cols)
 
 
 def unpivot_for_digit_cols(
