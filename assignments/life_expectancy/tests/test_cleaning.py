@@ -2,13 +2,13 @@
 import pandas as pd
 import numpy as np
 
-from life_expectancy.cleaning import clean_data, parse_args
+from life_expectancy.cleaning import main, parse_args
 from . import OUTPUT_DIR
 
 
 def test_clean_data(pt_life_expectancy_expected):
     """Run the `clean_data` function and compare the output to the expected output"""
-    clean_data()
+    main()
     pt_life_expectancy_actual = pd.read_csv(
         OUTPUT_DIR / "pt_life_expectancy.csv"
     )
@@ -20,7 +20,7 @@ def test_clean_data(pt_life_expectancy_expected):
 def test_location_filter(get_configs):
     """Run the `clean_data` function and compare the output to the expected output"""
 
-    clean_data('ES')
+    main('ES')
 
     location_col = get_configs.get('col_location', 'region')
 
